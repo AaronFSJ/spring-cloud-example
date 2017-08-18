@@ -1,0 +1,12 @@
+启动的配置方式有两种，一种是application.yml方式，一种是application.properties方式
+1、yml配置方式，一定要与com.aaron.config.DruidDataSourceConfig一起配合启动，该类主要加载druid。
+2、properties方式，要将com.aaron.config.DruidDataSourceConfig注释掉
+3、配置了druid监控，由com.aaron.common.servlet.DruidStatViewServlet和com.aaron.common.filter.DruidStatFilter，
+其中DruidStatViewServlet负责启动加载，并配置监按信息，DruidStatFilter负责请求过滤，
+访问后台监控地址为：http://<ip>:<port>/<projectName>/druid/index.html,如：http://localhost:8080/springcloud/druid/index.html
+4、spring-boot静态首页的支持，即index.html放在以下目录结构会直接映射到应用的根目录下
+classpath:/META-INF/resources/index.html
+classpath:/resources/index.html
+classpath:/static/index.html
+calsspath:/public/index.html
+在spring-boot下，默认约定了Controller试图跳转中thymeleaf模板文件的的前缀prefix是”classpath:/templates/”,后缀suffix是”.html”
