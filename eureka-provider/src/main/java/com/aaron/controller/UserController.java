@@ -24,7 +24,7 @@ public class UserController {
     private UserService userService;
 
    //http://localhost:8080/getUser/1
-    @GetMapping("getUser/{id}")
+    @GetMapping("/getUser/{id}")
     public User getUser(@PathVariable Long id){
         User user = userService.selectById(id);
         return user;
@@ -37,7 +37,7 @@ public class UserController {
 //    }
 
 //    @RequestMapping("getAll/{pageNum}/{pageSize}")
-    @GetMapping("getAll/{pageNum}/{pageSize}")
+    @GetMapping("/getAll/{pageNum}/{pageSize}")
     public PageInfo<User> getAll(@PathVariable int pageNum,@PathVariable int pageSize) {
 //        User user = new User();
         Pager pager = new Pager();
