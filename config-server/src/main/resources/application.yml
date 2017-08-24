@@ -1,0 +1,12 @@
+server:
+  port: 8083
+  context-path: /config-server
+spring:
+  application:
+    name: config-server #注册到eureka上的名称
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/AaronFSJ/spring-cloud-example.git
+          search-paths: spring-cloud-config-repo
