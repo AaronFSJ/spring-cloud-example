@@ -1,3 +1,12 @@
 spring:
   application:
-    name:
+    # 对应config server所获取的配件文件的{application}
+    name: cloud-config
+  cloud:
+    config:
+     # 对应config server的地，默认http://localhost:8888，现指定8083
+      uri: http://localhost:8083/config-server/
+      #profile对应config server所获取的配置文件中的{profile}
+      profile: dev
+      #指定Git仓库的分支，对应config server所获取的配置文件中的{lable}
+      lable : master
