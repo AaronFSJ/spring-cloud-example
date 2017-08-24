@@ -6,20 +6,20 @@
 /{label}/{application}-{profile}.properties
 其中{label}对应的git仓库的分支，默认为master
 {application}表示微服务名称，但是这个微服务不是指本应用，而是指远程配置文件指定的微服务名称，如本应用连接的远程配置文件，其中一个配置文件命名为：
-config-client-dev.properties，config-client就是微服务的名称{application}，dev就是{profile}
-因此在获取配置文件时地址为http://localhost:8083/config-server/config-client/dev，
-当然也可以认为{application}为config，{profile}为client-dev，因此访问时也可以为http://localhost:8083/config-server/config/client-dev
+cloud-config-dev.properties，cloud-config就是微服务的名称{application}，dev就是{profile}
+因此在获取配置文件时地址为http://localhost:8083/config-server/cloud-config/dev，
+当然也可以认为{application}为cloud，{profile}为config-dev，因此访问时也可以为http://localhost:8083/config-server/config/client-dev
 
 当配置是yml格式时，一定要用/{application}-{profile}.yml访问方式，不能用/{application}/{profile}.yml,
 且访问出来的数据是yml里的文件+其对应的properties文件的并集，如果没有对应的properties文件，则合默认的文件，
 如：
-config-client-dev.yml内容为：
+cloud-config-dev.yml内容为：
 profile=dev-yml-1.0
-对应的config-client-dev.properties内容为：
+对应的cloud-config-dev.properties内容为：
 profile=dev-1.0
 /{application}-{profile}.yml访问后内容为：
 document: profile=dev-yml-1.0
 profile: dev-1.0
-如果没有对应的config-client-dev.properties，就会去找config-client.properties或config-client-default.properties合并后为：
+如果没有对应的cloud-config-dev.properties，就会去找cloud-config.properties或cloud-config-default.properties合并后为：
 document: profile=dev-yml-1.0
 profile: default-1.0
