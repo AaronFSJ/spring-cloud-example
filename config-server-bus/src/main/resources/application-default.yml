@@ -1,0 +1,38 @@
+#此方式最简单
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          #此种方式url是整个repertory就是配置文件目录
+          uri: https://github.com/AaronFSJ/spring-cloud-config-repertory
+          #Spring Cloud会创建一个“bootstrap”的上下文，这是主应用程序的父上下文。
+          #对应的配置文件拥有最高优先级，并且，默认不能被本地配置文件覆盖。对应的文件名bootstrap.yml或bootstrap.properties
+#        bootstrap: false #bootstrap进程
+
+##日志级别
+#logging:
+#  level:
+#    org.springframework.cloud: DEBUG
+#    org.springframework.boot: DEBUG
+
+#如果需要本地文件覆盖远程文件，需要在远程配置文件里设置授权
+# spring.cloud.config.allowOverride=true（这个配置不能在本地被设置）。一旦设置了这个权限，你可以配置更加细粒度的配置来配置覆盖的方式，
+#
+# 比如：
+# - spring.cloud.config.overrideNone=true 覆盖任何本地属性
+# - spring.cloud.config.overrideSystemProperties=false 仅仅系统属性和环境变量
+
+##测试：可以使用http://localhost:8083/config-server/cloud-config-dev.properties
+##访问 http://localhost:8083/config-server/下的cloud-config-dev.properties
+##即https://github.com/AaronFSJ/spring-cloud-config-repertory下的cloud-config-dev.properties
+
+##测试：可以使用http://localhost:8083/config-server/cloud-config-dev.yml
+##访问 http://localhost:8083/config-server/下的cloud-config-dev.yml,
+##即https://github.com/AaronFSJ/spring-cloud-config-repertory下的cloud-config-dev.yml
+
+##测试：可以使用http://localhost:8083/config-server/cloud-config/dev
+##访问 http://localhost:8083/config-server/下的cloud-config-dev.properties或
+##访问 http://localhost:8083/config-server/下的cloud-config-dev.yml,
+##如果cloud-config-dev.properties和cloud-config-dev.yml同时存在，就会将两个记录合并返回
+

@@ -10,3 +10,8 @@ Spring cloud有一个"引导上下文"的概念，这是主应用程序的父上
 和主应用程序加载applicatio.*(*是yml或properties)中的属性不同，引导上下文加载bootstrap.*中的属性。配置在bootstrap.*中的属性有更高的优
 先级，因此默认情况下它们不能被本地配置覆盖。
 如需禁用引导过程，可设置spring.cloud.bootstrap.enabled=false。
+
+很多时候，需要在运行期间动态调整配置，可使用/refresh端点手动刷新配置。actuator的依赖包含了/refresh端点。
+在Controller上添加注解@RefreshScope。
+配置后要手动做一次刷新，否则不起作用，如http://localhost:8084/refresh,一定要用post方式去刷新
+

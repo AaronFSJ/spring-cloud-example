@@ -5,6 +5,16 @@ server:
 management:
   security:
     enabled: false
+spring:
+    #rabbitmq配置
+    rabbitmq:
+      port: 5672
+      host: localhost
+      username: guest
+      password: guest
+
+
+
 
 
 ##在启动时要注意，有时候明明这里没指定端口号或者指定了端口号，和没有配置server-context-path项目访问地址，

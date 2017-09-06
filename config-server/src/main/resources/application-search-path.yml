@@ -1,0 +1,17 @@
+#搜索目录，很多场景下，可能把配置文件放在了Git仓库的子目录中，此时可以使用search-paths指定，search-paths同样支持占位符
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          #此种方式url是在repertory库下面有很多项目,配置文件放在Git仓库的子目录中，其中一个项目是spring-cloud-config-repo
+          uri: https://github.com/AaronFSJ/spring-cloud-example
+          search-paths: spring-cloud-config-repo
+          #占位符匹配，只能后匹配，Config Server会在Git仓库的根目录、所有以spring-cloud-config开始子目录，bar子目录下查询配置文件
+#          search-paths: spring-cloud-config*,bar
+
+##日志级别
+#logging:
+#  level:
+#    org.springframework.cloud: DEBUG
+#    org.springframework.boot: DEBUG

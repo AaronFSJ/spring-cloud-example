@@ -5,9 +5,14 @@ spring:
   cloud:
     config:
      # 对应config server的地，默认http://localhost:8888，现指定8083
-      uri: http://localhost:8083/config-server/
+      uri: http://localhost:8083/
       #profile对应config server所获取的配置文件中的{profile}
-      profile: dev
+      profile: prod
       #指定Git仓库的分支，对应config server所获取的配置文件中的{lable}
       lable : master
-
+#  #rabbitmq配置
+#  rabbitmq:
+#    port: 5672
+#    host: localhost
+#    username: guest
+#    password: guest

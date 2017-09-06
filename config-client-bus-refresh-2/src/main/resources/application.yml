@@ -1,7 +1,5 @@
 server:
-  port: 8084
-
-#访问refresh端点要需要权限，可以通过Spring Security来实现权限控制，或者把权限限制去掉：把management.security.enabled设置为false
+  port: 8085
 management:
   security:
     enabled: false

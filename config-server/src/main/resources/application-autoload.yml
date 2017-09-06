@@ -1,0 +1,20 @@
+##启动时加载配置文件
+##默认情况下，在配置被首次请求时，Config Server才会clone Git仓库。也可让Config Server在启动时就clone Git仓库spring:
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/spring-cloud-samples/config-repo
+          repos:
+            cloud-config: https://github.com/AaronFSJ/spring-cloud-config-repertory
+            team-a:
+              pattern: team
+              uri: https://github.com/AaronFSJ/config-repo
+              clone-on-start: true
+
+#日志级别
+logging:
+  level:
+    org.springframework.cloud: DEBUG
+    org.springframework.boot: DEBUG

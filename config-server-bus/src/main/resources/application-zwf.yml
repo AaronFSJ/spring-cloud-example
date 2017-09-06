@@ -1,0 +1,24 @@
+#占位符方式
+spring:
+  application:
+    name: microservice-config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/AaronFSJ/{application}
+          username:                                                         # Git仓库的账号
+          password:                                                         # Git仓库的密码
+#logging:
+#  level:
+#    org.springframework.cloud: DEBUG
+#    org.springframework.boot: DEBUG
+
+## 测试：可以使用http://localhost:8083/config-server/spring-cloud-config-repertory-default.yml
+##获取到http://localhost:8083/config-server/spring-cloud-config-repertory下的application.properties,
+##只可获取到application开头的配置文件
+
+#可以使用http://localhost:8083/config-server/spring-cloud-config-repertory-dev.yml
+##获取到http://localhost:8083/config-server/spring-cloud-config-repertory下的application-dev.properties
+
+

@@ -1,0 +1,40 @@
+##模式匹配
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/spring-cloud-samples/config-repo
+#          search-paths: spring-cloud-config-repo
+          repos:
+            #此处因为没有pattern，所以是占位符方式相当于https://github.com/AaronFSJ/spring-cloud-config-repertory/{application}
+            #此处的cloud-config就是application
+            cloud-config: https://github.com/AaronFSJ/spring-cloud-config-repertory
+            special: #因为配置了pattern模式匹配此处special不是应用名，就是一个别名，真正的应用名为带有通配符的以下的special*
+#              pattern: special*,*special*
+#              pattern: special*/*,*special*/*
+              pattern: special*/dev*,*special*/dev*
+              uri: https://github.com/AaronFSJ/config-repo
+            foo: #同因为配置了pattern模式匹配此处foo不是应用名，就是一个别名，真正的应用名为带有通配符的以下的local*，因此可以看到foo，不一样
+              #该问方式为http://localhost:8083/config-server/local/dev，能访问本地库的前提是本地库已经commit
+              pattern: local*
+              #在Windows系统里面，如果文件URL是绝对路径，前面有驱动符号,你需要多增加个’/’符号, file:///${user.home}/config-repo.
+              uri: file:/Users/Aaron/my-workspace/config-repo
+
+##日志级别
+#logging:
+#  level:
+#    org.springframework.cloud: DEBUG
+#    org.springframework.boot: DEBUG
+
+##模式匹配指的是带有通配符的{application/{profile}名称的列表。如果{application/{profile}不匹配任何模式，
+##它将会使用spring.cloud.config.server.git.uri定义的URI
+##上面的例子中，对于https://github.com/AaronFSJ/spring-cloud-config-repertory仓库只匹配所有配置文件中名为cloud-config的应用程序。
+##通过http://localhost:8083/config-server/cloud-config/dev去访问
+
+##对于special仓库,只匹配名字通配special*,*special*的应用，且文件后缀通配dev*的文件，
+##可以通过http://localhost:8083/config-server/special/dev访问，访问的库地址为https://github.com/AaronFSJ/config-repo
+
+##对于foo仓库，只匹配名字通配local*的应用，
+##可以通过http://localhost:8083/config-server/local/dev去访问，能访问本地库的前提是本地库已经commit
+##访问的库地址为本地的/Users/Aaron/my-workspace/config-repo
