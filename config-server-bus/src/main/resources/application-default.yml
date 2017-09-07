@@ -6,9 +6,19 @@ spring:
         git:
           #此种方式url是整个repertory就是配置文件目录
           uri: https://github.com/AaronFSJ/spring-cloud-config-repertory
+        health:
+          repositories:
+            a-foo:
+              label: master
+              name: cloud-config
+              profiles: prod
           #Spring Cloud会创建一个“bootstrap”的上下文，这是主应用程序的父上下文。
           #对应的配置文件拥有最高优先级，并且，默认不能被本地配置文件覆盖。对应的文件名bootstrap.yml或bootstrap.properties
 #        bootstrap: false #bootstrap进程
+      bus:
+        trace:
+          enabled: true # 开启cloud bus的跟踪
+
 
 ##日志级别
 #logging:

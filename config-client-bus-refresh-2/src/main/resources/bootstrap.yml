@@ -4,15 +4,34 @@ spring:
     name: cloud-config
   cloud:
     config:
-     # 对应config server的地，默认http://localhost:8888，现指定8083
-      uri: http://localhost:8083/
-      #profile对应config server所获取的配置文件中的{profile}
-      profile: prod
-      #指定Git仓库的分支，对应config server所获取的配置文件中的{lable}
-      lable : master
+       # 对应config server的地，默认http://localhost:8888，现指定8083
+       uri: http://localhost:8083/
+       #profile对应config server所获取的配置文件中的{profile}
+       profile: prod
+       #指定Git仓库的分支，对应config server所获取的配置文件中的{lable}
+       lable : master
+       discovery:
+          #指定服务发现eureka上的注册的bus server服务，不指定默认去找configserver
+          service-id: config-bus-server
+          enabled: true
+       #config server开启了安全验证
+       username: admin
+       password: admin
   #rabbitmq配置
   rabbitmq:
     port: 5672
     host: localhost
     username: guest
     password: guest
+
+#eureka注册
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+management:
+  security:
+    enabled: false

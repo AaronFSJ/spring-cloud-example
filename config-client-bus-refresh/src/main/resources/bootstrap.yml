@@ -10,6 +10,9 @@ spring:
       profile: prod
       #指定Git仓库的分支，对应config server所获取的配置文件中的{lable}
       lable : master
+      #config server开启了安全验证
+      username: admin
+      password: admin
 #  #rabbitmq配置
 #  rabbitmq:
 #    port: 5672

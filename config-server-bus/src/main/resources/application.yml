@@ -1,51 +1,51 @@
-#server:
-#  port: 8083
-#  context-path: /config-server
-#spring:
-#  application:
-#    name: config-server #注册到eureka上的名称
-#  profiles:
-##    active: default #指向application-default.yml
-##    active: search-path #指向application-search-path.yml
-##    active: pattern #指向application-pattern.yml
-##    active: zwf #指向application-zwf.yml
-#     active: autoload #指向application-pattern.yml
-#
-#  cloud:
-#    bus:
-#      trace:
-#        enabled: true     # 开启cloud bus的跟踪
-#
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: guest
-#    password: guest
-#
 server:
   port: 8083
 #  context-path: /config-server
 spring:
   application:
-    name: config-server
+    name: config-bus-server #向eureka注册的名字
   profiles:
     active: default #指向application-default.yml
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/AaronFSJ/spring-cloud-config-repertory      # 配置Git仓库的地址
-          username:                                                         # Git仓库的账号
-          password:                                                         # Git仓库的密码
-    bus:
-      trace:
-        enabled: true     # 开启cloud bus的跟踪
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          uri: https://github.com/AaronFSJ/spring-cloud-config-repertory      # 配置Git仓库的地址
+#          username:                                                         # Git仓库的账号
+#          password: # Git仓库的密码
+#    bus:
+#      trace:
+#        enabled: true # 开启cloud bus的跟踪
+  #把server也也到消息总线中，并用server的bus/refresh来刷新，这样业务微服务只关注了自身的业务，不承担配置刷新
   rabbitmq:
     host: localhost
     port: 5672
     username: guest
     password: guest
 
+#访问refresh端点要需要权限，可以通过Spring Security来实现权限控制，或者把权限限制去掉：把management.security.enabled设置为false
+management:
+  security:
+    enabled: false
+#eureka注册
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+security:
+  basic:
+    enabled: true #开启基于HTTP Basic的认证
+  user:
+    name: admin
+    password: admin
+
+
+#curl -X POST http://localhost:8083/bus/refresh
+##局部刷新，8084
+#curl -X POST http://localhost:8083/bus/refresh?destination=customers:8084
+
+
+#可通过git仓库的WebHooks实现自动刷新,在github上设置
 
 #spring:
 #  application:

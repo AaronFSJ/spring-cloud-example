@@ -1,21 +1,29 @@
 server:
   port: 8084
+spring:
+  rabbitmq:
+    port: 5672
+    host: localhost
+    username: guest
+    password: guest
+  cloud:
+    config:
+      discovery:
+      #指定服务发现eureka上的注册的bus server服务，不指定默认去找configserver
+        service-id: config-bus-server
+        enabled: true
+#eureka注册
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+#  instance:
+#    prefer-ip-address: true
 
 #访问refresh端点要需要权限，可以通过Spring Security来实现权限控制，或者把权限限制去掉：把management.security.enabled设置为false
 management:
   security:
     enabled: false
-spring:
-    #rabbitmq配置
-    rabbitmq:
-      port: 5672
-      host: localhost
-      username: guest
-      password: guest
-
-
-
-
 
 ##在启动时要注意，有时候明明这里没指定端口号或者指定了端口号，和没有配置server-context-path项目访问地址，
 ##但是启动后发现端口号不对，还有项目访问地址或者其他配置不对，那是因为bootstrap.yml里调了config-server的服务读取了父上下文的配置文件，
@@ -23,7 +31,12 @@ spring:
 
 #测试http://localhost:8084/profile或http://localhost:8084/getDatasource指向ConfigClientController的方法，访问得到数据则成功
 
-
-#很多时候，需要在运行期间动态调整配置，可使用/refresh端点手动刷新配置。actuator的依赖包含了/refresh端点。
+#很多时候，需要在运行期间动态调整配置，但随便着微服务节点越来越多，每个节点都使用/refresh端点手动刷新配置工作量在，可以用bus和mq结合，只要
+#其中一个刷新了，其余节点自动
 #在Controller上添加注解@RefreshScope。
-#配置后要手动做一次刷新，否则不起作用，如http://localhost:8084/refresh,一定要用post方式去刷新
+#配置后要手动做一次刷新，否则不起作用，如http://localhost:8084/bus/refresh,一定要用post方式去刷新
+
+#可局部刷新，有时候只想刷新部分服务，可通过/bus/refresh端点的destination参数来定位要刷新和应用程序
+#如http://localhost:8084/bus/refresh?destination=customers:8085,其中customers:8085指的是各个微服务的ApplicationContext ID
+#destination也可以定位特殊的微服务,如http://localhost:8084/bus/refresh?destination=customers:**，这样就可以触发customers微服务所有实例的配置刷新
+#ApplicationContext ID默认情况下就是spring.application.name:server.port。
